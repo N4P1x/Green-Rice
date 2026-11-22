@@ -1,7 +1,7 @@
 # Green-Rice
 
 <p align="center">
-  <img src="assets/hero-banner.png" width="100%" alt="Green-Rice hero banner" />
+  <img src="assets/desktop-real.png" width="100%" alt="Green-Rice real desktop" />
 </p>
 
 <p align="center">
@@ -15,19 +15,15 @@
 ## ✨ Preview
 
 <p align="center">
-  <b>The TUI installer</b>
+  <b>The TUI installer (real capture)</b>
 </p>
 
 <p align="center">
-  <img src="assets/tui-preview.png" width="100%" alt="green-rice-install TUI preview" />
+  <img src="assets/tui-real.png" width="100%" alt="green-rice-install real TUI preview" />
 </p>
 
 <p align="center">
-  <b>The installed Miasma desktop</b>
-</p>
-
-<p align="center">
-  <img src="assets/desktop-preview.png" width="100%" alt="Green-Rice desktop preview" />
+  <i>Real screenshot of your Miasma Hyprland desktop + the green-rice-install TUI in action.</i>
 </p>
 
 ---
