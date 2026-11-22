@@ -1,6 +1,6 @@
-"""Rich-powered TUI UI for the Green-Rice installer.
+"""Theme helpers for the Green-Rice installer.
 
-All colours are drawn from the Miasma palette so the installer *is* the rice.
+Miasma palette colors and ok/warn/err/info styling helpers.
 """
 
 from __future__ import annotations
@@ -74,13 +74,13 @@ console = Console(theme=miasma_theme(), force_terminal=True)
 
 
 def banner() -> None:
-    """Print the big Green-Rice welcome banner."""
+    """Print the welcome banner."""
     title = Text.assemble(
         ("  GREEN-RICE  ", "bold miasma.fg on miasma.bg_panel"),
-        ("   ultra-smart TUI installer   ", "miasma.accent"),
+        ("   TUI installer   ", "miasma.accent"),
     )
     subtitle = Text(
-        "Miasma Hyprland rice  •  installs, verifies, rolls back  •  better than OMARCHY 4.5",
+        "Miasma Hyprland rice  •  installs, verifies, rolls back",
         style="miasma.fg_muted",
     )
     panel = Panel(

@@ -253,7 +253,7 @@ class GreenRiceInstaller(App):
         with Container(id="header"):
             yield Static("GREEN-RICE", id="banner-title", classes="banner-title")
             yield Static(
-                "Miasma Hyprland Rice  ·  Ultra-Smart TUI Installer  ·  Better than OMARCHY 4.5",
+                "Miasma Hyprland Rice  ·  TUI Installer",
                 id="banner-sub",
                 classes="banner-sub",
             )

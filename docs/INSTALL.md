@@ -1,8 +1,8 @@
 # Green-Rice install guide
 
-The **Miasma** Hyprland rice, provisioned by an ultra-smart TUI installer.
+The Miasma Hyprland rice, provisioned by a TUI installer.
 
-## Option 1 — TUI installer (recommended)
+## Option 1 — TUI installer
 
 ```sh
 git clone https://github.com/N4P1x/Green-Rice.git
@@ -19,7 +19,7 @@ The TUI walks you through:
 5. Install: packages → fonts → dotfiles → apps → verify
 6. Post-install verification (pass/fail per check)
 
-After it finishes: **log out and back in** so Hyprland + GTK pick up the new configs.
+After it finishes: log out and back in so Hyprland + GTK pick up the new configs.
 
 ### Common invocations
 
@@ -30,7 +30,7 @@ After it finishes: **log out and back in** so Hyprland + GTK pick up the new con
 ./installer/green-rice-install --select dotfiles fonts verify   # only these
 ./installer/green-rice-install --rollback        # restore latest backup
 ./installer/green-rice-install --list-backups    # list backups
-./installer/green-rice-install --state           # idempotency log
+./installer/green-rice-install --state           # install-state log
 ```
 
 ## Option 2 — manual (build.sh + install.sh)
@@ -81,7 +81,7 @@ The installer records what it did in `~/.local/state/green-rice/state.json`. Re-
 
 ## Requirements
 
-- Arch Linux (best), `pacman` (+ `yay`/`paru` for AUR packages like `hyprlang2lua`)
+- Arch Linux — `pacman` (+ `yay`/`paru` for AUR packages like `hyprlang2lua`)
 - Hyprland ≥ 0.56
-- `python3` and the `rich` package (TUI installer)
+- `python3` and the `textual` package (TUI installer)
 - `git`, `curl`, `unzip`, `zstd`, `fc-cache`
