@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Miasma power menu.
+action=$(
+  printf '%s\n' \
+    '󰌾  Lock' \
+    '󰍃  Logout' \
+    '󰤄  Suspend' \
+    '󰜉  Reboot' \
+    '󰐥  Shutdown' |
+    wofi --dmenu --prompt 'Power' --width 340 --height 310 --location center
+)
+[ -z "$action" ] && exit 0
+
+case "$action" in
+*Lock) exec hyprlock ;;
+*Logout)
+  hyprctl dispatch exit
+  ;;
+*Suspend) systemctl suspend ;;
+*Reboot) systemctl reboot ;;
+*Shutdown) systemctl poweroff ;;
+esac

@@ -1,0 +1,12 @@
+width=760
+height=480
+location=center
+columns=1
+lines=8
+orientation=vertical
+hide_scroll=true
+insensitive=true
+allow_markup=true
+matching=fuzzy
+term=kitty
+prompt=Run

@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# Miasma wallpaper menu.
+# Picks a wallpaper and applies it live via hyprpaper IPC.
+# The chosen wallpaper is persisted to hyprpaper.conf so it survives a restart.
+# The Hyprland default background is disabled (misc:force_default_wallpaper = 1),
+# so the brief load gap when switching shows a plain color, not the anime mask.
+DIR="$HOME/dotfiles/wallpapers"
+CFG="$HOME/.config/hypr/hyprpaper.conf"
+
+mapfile -t walls < <(
+  find "$DIR" -maxdepth 1 -type f \
+    \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) \
+    -printf '%f\n' 2>/dev/null | sort -k1,1n -t'-'
+)
+[ "${#walls[@]}" -eq 0 ] && exit 1
+
+choice=$(
+  printf '%s\n' "${walls[@]}" |
+    wofi --dmenu --prompt 'Wallpaper' --width 460 --height 560 --location center
+)
+[ -z "$choice" ] && exit 0
+
+path="$DIR/$choice"
+real="$(readlink -f "$CFG" 2>/dev/null || echo "$CFG")"
+
+# Persist the chosen wallpaper as the fallback for the next hyprpaper start.
+if [ -f "$real" ]; then
+  tmp="$(mktemp "$(dirname "$real")/.hp.XXXXXX")" || exit 1
+  {
+    echo "splash = false"
+    echo "wallpaper {"
+    echo "    monitor ="
+    echo "    path = $path"
+    echo "    fit_mode = cover"
+    echo "}"
+  } > "$tmp" && mv "$tmp" "$real"
+fi
+
+if command -v rg >/dev/null 2>&1; then
+  monitor="$(hyprctl monitors -j 2>/dev/null | rg -o '"name": "[^"]*"' | head -1 | sed 's/"name": "\(.*\)"/\1/')"
+else
+  monitor="$(hyprctl monitors -j 2>/dev/null | grep -o '"name": "[^"]*"' | head -1 | sed 's/"name": "\(.*\)"/\1/')"
+fi
+[ -n "$monitor" ] || monitor="eDP-1"
+
+hyprctl hyprpaper wallpaper "$monitor,$path,cover" >/dev/null 2>&1
+
+# notify-send is not installed; dunstify is. Try all, never fail.
+notify-send 'Wallpaper' "$choice" >/dev/null 2>&1 \
+  || dunstify 'Wallpaper' "$choice" >/dev/null 2>&1 \
+  || hyprctl notify 0 3000 "rgb(78824b)" "Wallpaper: $choice" >/dev/null 2>&1 \
+  || true
+

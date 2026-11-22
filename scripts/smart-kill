@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# Smart kill for Hyprland (Super+Q).
+# Normal apps: graceful close (same as old killactive).
+# Tray-huggers (Discord + forks): SIGKILL the process so it actually quits
+# instead of just hiding the window to the tray.
+# NOTE: Hyprland >= 0.55 uses Lua, so dispatch needs Lua syntax:
+#   hyprctl dispatch 'hl.dsp.window.close()'
+# Legacy `hyprctl dispatch killactive` errors out in Lua mode.
+set -euo pipefail
+
+info="$(hyprctl activewindow -j 2>/dev/null || echo '{}')"
+
+read -r class pid <<< "$(INFO="$info" python3 -c '
+import json, os
+try:
+    d = json.loads(os.environ.get("INFO", "{}"))
+except Exception:
+    d = {}
+cls = (d.get("class") or d.get("initialClass") or "").lower()
+pid = d.get("pid") or 0
+print(cls, pid)
+')"
+
+# Discord + common Electron chat clients that minimize-to-tray on close.
+case "$class" in
+  discord|discordcanary|discord-development|discord-ptb|vesktop|vencord|equibop|armcord|webcord|legcord)
+    # Built-in SIGKILL of the window owner (Hyprland Lua API) + pkill to
+    # catch tray icon / child processes that outlive the window.
+    hyprctl dispatch 'hl.dsp.window.kill()' 2>/dev/null || true
+    if [[ "$pid" != "0" ]]; then
+      kill "$pid" 2>/dev/null || true
+    fi
+    # comm is "Discord" (capital D); -x = exact match. Fallbacks cover forks.
+    pkill -x Discord 2>/dev/null || true
+    pkill -x discord 2>/dev/null || true
+    pkill -x vesktop 2>/dev/null || true
+    pkill -x equibop 2>/dev/null || true
+    pkill -x armcord 2>/dev/null || true
+    pkill -x legcord 2>/dev/null || true
+    # Safety net: if it survived 2s (tray lingering), force-kill.
+    sleep 2
+    if [[ "$pid" != "0" ]] && kill -0 "$pid" 2>/dev/null; then
+      kill -9 "$pid" 2>/dev/null || true
+    fi
+    pkill -9 -x Discord 2>/dev/null || true
+    exit 0
+    ;;
+esac
+
+exec hyprctl dispatch 'hl.dsp.window.close()'

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# green-rice-install — executable entry point for the Green-Rice TUI installer.
+# Usage: ./installer/green-rice-install [--dry-run] [-y] [--rollback] ...
+set -euo pipefail
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT="$(cd "$HERE/.." && pwd)"
+cd "$ROOT"
+exec python3 -m installer.__main__ "$@"
