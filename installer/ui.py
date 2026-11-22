@@ -162,7 +162,9 @@ class ComponentsMenu:
 
     def render(self) -> Table:
         table = Table(
-            box=ROUNDED, border_style="miasma.accent", header_style="bold miasma.fg"
+            box=ROUNDED,
+            border_style="miasma.accent",
+            header_style="bold",
         )
         table.add_column("#", width=4, style="miasma.fg_muted")
         table.add_column("Pick", width=6, style="miasma.accent")
