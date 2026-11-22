@@ -26,6 +26,7 @@ installer/            TUI installer package (Python + Rich)
   verify.py           post-install per-check pass/fail
 wallpapers/           Miasma wallpaper set
 scripts/              power/bg/audio menus, smart-kill, sync-hypr-lua
+assets/               Repo screenshots (hero-banner, tui-preview, desktop-preview)
 docs/                 INSTALL.md
 ```
 

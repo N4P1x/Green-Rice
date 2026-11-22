@@ -1,11 +1,36 @@
 # Green-Rice
 
-**Green-Rice** is my personal Hyprland rice — the **Miasma** theme — shipped with an **ultra-smart TUI installer** that installs, verifies, and rolls back. Think OMARCHY 4.5's installer, but with a real Rich-powered TUI, interactive component selection, live color swatches, timestamped smart backups, one-command rollback, and idempotent re-runs.
+<p align="center">
+  <img src="assets/hero-banner.png" width="100%" alt="Green-Rice hero banner" />
+</p>
 
-```
-cellar-grey #222222 surfaces  ·  pale-linen #c2c2b0 text  ·  moss-olive #78824b accent
-soft fogbank animations inside sharp-cornered Hyprland
-```
+<p align="center">
+  <b>Miasma Hyprland Rice</b> — with an <b>ultra-smart TUI installer</b> that builds, links,
+  verifies, and rolls back your desktop.<br>
+  Cellar-grey #222222 surfaces · pale-linen #c2c2b0 text · moss-olive #78824b accent
+</p>
+
+---
+
+## ✨ Preview
+
+<p align="center">
+  <b>The TUI installer</b>
+</p>
+
+<p align="center">
+  <img src="assets/tui-preview.png" width="100%" alt="green-rice-install TUI preview" />
+</p>
+
+<p align="center">
+  <b>The installed Miasma desktop</b>
+</p>
+
+<p align="center">
+  <img src="assets/desktop-preview.png" width="100%" alt="Green-Rice desktop preview" />
+</p>
+
+---
 
 ## What's inside
 
@@ -15,13 +40,16 @@ soft fogbank animations inside sharp-cornered Hyprland
 | `templates/`          | Per-app configs with `{{token}}` placeholders              |
 | `build.sh`            | Renders `templates/` → `dist/`                             |
 | `install.sh`          | Links/copies `dist/` into `~/.config`                      |
-| `installer/`          | **The ultra-smart TUI installer** (Python + Rich)          |
+| `installer/`          | **Ultra-smart TUI installer** (Python + Rich)              |
 | `scripts/`            | power-menu, bg-menu, audio-menu, smart-kill, sync-hypr-lua |
 | `wallpapers/`         | Miasma wallpaper set                                       |
+| `assets/`             | Repo screenshots                                           |
 
-## The TUI installer (`installer/green-rice-install`)
+---
 
-This is the star of the repo. Run it on any Arch machine and it provisions the whole rice:
+## 🚀 The TUI installer
+
+Run it on any Arch machine and it provisions the whole rice:
 
 ```sh
 git clone https://github.com/N4P1x/Green-Rice.git
@@ -65,7 +93,9 @@ cd Green-Rice
 | One-shot                   | **Idempotent** — re-run safely, skips done steps |
 | No verification            | **Per-check pass/fail verify**                   |
 
-## Quick start (manual, without the TUI)
+---
+
+## 🛠️ Quick start (manual, without the TUI)
 
 ```sh
 ./build.sh          # render all templates → dist/
@@ -76,21 +106,58 @@ cd Green-Rice
 
 Re-colour the whole system: edit `palette/colors.conf`, then `./build.sh all && ./install.sh link`.
 
-## Manual installs (outside ~/.config)
+---
 
-See the original dotfiles README — Firefox `userChrome.css`, Obsidian `miasma.css` snippet, VS Code `miasma-color-theme`, Vencord Discord theme, Steam Adwaita CSS, cava, wallpapers via hyprpaper.
+## 📦 Component sets
 
-## Requirements
+| Set        | Installs                                                                              |
+| ---------- | ------------------------------------------------------------------------------------- |
+| packages   | hyprland, kitty, waybar, wofi, mako, firefox, obsidian, code, btop, fonts, … (pacman) |
+| fonts      | JetBrainsMono Nerd Font + Noto Color Emoji (user-local, no sudo)                      |
+| dotfiles   | all Miasma configs built + linked into ~/.config                                      |
+| hypr-lua   | Hyprland Lua theme + live keybinding sync                                             |
+| firefox    | userChrome.css + dark-theme prefs                                                     |
+| obsidian   | miasma.css snippet (needs a vault)                                                    |
+| vscode     | Miasma colour theme                                                                   |
+| vencord    | Discord theme (load manually in Vencord)                                              |
+| steam      | Adwaita CSS (apply manually in Steam)                                                 |
+| wallpapers | Miasma wallpaper set                                                                  |
+| scripts    | power-menu, bg-menu, audio-menu, smart-kill → ~/.local/bin                            |
+| verify     | post-install pass/fail checks                                                         |
+
+---
+
+## 🔄 Rollback
+
+Backups live in `~/.local/state/green-rice/backups/`. To restore the latest:
+
+```sh
+./installer/green-rice-install --rollback
+```
+
+Or a specific backup:
+
+```sh
+./installer/green-rice-install --rollback green-rice-backup-pre-install-20261122.tar.zst
+```
+
+---
+
+## 📋 Requirements
 
 - Arch Linux (best experience) — `pacman`, optional `yay`/`paru` for AUR
 - Hyprland ≥ 0.56 (Lua config preferred)
 - `python3` + `rich` (the TUI installer)
 - `git`, `curl`, `unzip`, `zstd`, `fc-cache`
 
-## License
+---
+
+## 📄 License
 
 MIT — see [LICENSE](LICENSE).
 
 ---
 
-_Green-Rice — because your desktop should install itself._
+<p align="center">
+  <b>Green-Rice</b> — because your desktop should install itself.
+</p>
